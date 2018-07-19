@@ -1,0 +1,9 @@
+ RwSimpleProjectSpecification{
+	#specName : 'RowanSample6',
+	#version : '0.2.0',
+	#projectUrl : 'https://github.com/dalehenrich/RowanSample6',
+	#configsPath : 'sett/configs',
+	#repoPath : 'sett/src',
+	#specsPath : 'specs',
+	#comment : 'Not used for reading ... only used for writing out the initial project source code'
+}
