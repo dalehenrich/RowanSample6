@@ -5,5 +5,6 @@
 	#configsPath : 'sett/configs',
 	#repoPath : 'sett/src',
 	#specsPath : 'specs',
-	#comment : 'Not used for reading ... only used for writing out the initial project source code'
+	#defaultConfigurationNames : [ 'Default' ],
+	#comment : 'Not used for loading ... only used for writing out the initial packages produced by topaz/createProject_sett.gs'
 }
