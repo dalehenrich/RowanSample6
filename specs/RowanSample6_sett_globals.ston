@@ -2,10 +2,10 @@
 	#specName : 'RowanSample6_globals',
 	#version : '0.2.0',
 	#projectUrl : 'https://github.com/dalehenrich/RowanSample6',
-	#configsPath : 'reconcile/configs',
-	#repoPath : 'reconcile/src',
+	#configsPath : 'sett/configs',
+	#repoPath : 'sett/src',
 	#specsPath : 'specs',
 	#defaultConfigurationNames : [ 'Default' ],
 	#defaultGroupNames : [ 'globals' ],
-	#comment : 'use this spec for loading the globals group'
+	#comment : 'Use to load the globals packages as GlobalsCurator'
 }

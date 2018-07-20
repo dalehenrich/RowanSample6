@@ -64,6 +64,10 @@ run
   Rowan projectTools load
     loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_core.ston'
     projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
+false ifTrue: [ 
+  Rowan projectTools disown
+    disownProjectNamed: 'RowanSample6_bootstrap_core'
+]
 %
 commit
 
@@ -76,6 +80,10 @@ run
   Rowan projectTools load
     loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_globals.ston'
     projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
+false ifTrue: [ 
+  Rowan projectTools disown
+    disownProjectNamed: 'RowanSample6_bootstrap_globals'
+]
 %
 commit
 

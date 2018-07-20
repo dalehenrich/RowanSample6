@@ -8,7 +8,8 @@ The sett directory contains the application packages that have been converted fr
 The bootstrap directory contains the application packages needed to reproduce the starting state of the existing application stone, emulating the original symbol dictionary structure and set of users.
 
 1. [Setup](#setup)
-2. [Update](#update)
+2. [Reconcile](#reconcile)
+3. [Update](#update)
 
 ## Setup
 This section mainly covers the creation of a stone that mirrors the symbol dictionary and user structure of an existing GemStone/S application.
@@ -75,7 +76,7 @@ Use the following script to run the script using GsDevKit:
 ```
 At this point you can use Jadeite to look at the symbol dictionaries for both `UserCurator` and `GlobalsCurator`.
 
-## Update
+## Reconcile
 This section assumes that you have used SETT to convert your source code into Tonel format and are now ready to update a stone that contains your application so that Rowan and git can be used to manage the source code of your application moving forward.
 
 ### Reconcile the Sett code: move class extensions for Globals classes into separate packages
@@ -105,3 +106,8 @@ Use the following script to run the script using GsDevKit (covers [reconcile](#r
 ./newBuild_SystemUser_reconcile_sett
 ```
 Note that the `sett/src`and `sett/configs` directories will be modified when the above script runs. If you want to preserve the newly generated code, I suggest that you work on a branch to preserve the state of the master branch.
+
+## Update
+The [Reconcile](#reconcile) operation only needs to be done once ... in this project you should `checkout` the `reconcile_sett` branch where the results of the [reconcile](#reconcile-the-sett-code-move-class-extensions-for-globals-classes-into-separate-packages) have been saved.
+
+The update process involves creating a staging project and `adopting` the code in the image into the staging project so that the SETT package structure can be loaded into the stone.
