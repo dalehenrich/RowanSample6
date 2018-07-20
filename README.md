@@ -104,3 +104,4 @@ Use the following script to run the script using GsDevKit (covers [reconcile](#r
 ```
 ./newBuild_SystemUser_reconcile_sett
 ```
+Note that the `sett/src`and `sett/configs` directories will be modified when the above script runs. If you want to preserve the newly generated code, I suggest that you work on a branch to preserve the state of the master branch.
