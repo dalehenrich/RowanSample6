@@ -82,6 +82,72 @@ RowanSample6ProjectCreationSupport >> createBootstrapProjectForSettSpecUrl: sett
 
 ]
 
+{ #category : 'bootstrap' }
+RowanSample6ProjectCreationSupport >> createBootstrapUsersAndGroups [
+	"Two users UserCurator and GlobalsCurator and two groups ApplicationModificationGroup and GlobalsModificationGroup ... on the off chance that we
+		end up with more application users"
+
+	"Should be run as SystemUser"
+
+"create groups"
+	  (AllGroups includes: 'GlobalsModificationGroup')
+		ifFalse: [AllGroups add: 'GlobalsModificationGroup' ].
+	  SystemObjectSecurityPolicy group: 'GlobalsModificationGroup' authorization: #write.
+
+	  (AllGroups includes: 'ApplicationModificationGroup')
+		ifFalse: [AllGroups add: 'ApplicationModificationGroup' ].
+
+"create users"
+	  #( 'GlobalsCurator' 'UserCurator' )
+		do: [:userId |
+		  | newUser |
+		  newUser := AllUsers userWithId: userId ifAbsent: [ nil ].
+		  newUser
+			ifNil: [
+			  | securityPolicy worldAuthorization |
+			  worldAuthorization := #read.
+			 securityPolicy := GsObjectSecurityPolicy new
+			ownerAuthorization: #write;
+			worldAuthorization: worldAuthorization;
+			yourself.
+			  System commit.
+			   newUser := AllUsers 
+				addNewUserWithId: userId
+				password: 'swordfish'
+				defaultObjectSecurityPolicy: securityPolicy
+				privileges: #('CodeModification'
+				  'UserPassword'
+				  'OtherPassword'
+				  'GarbageCollection'
+				  'SystemControl'
+				  'SessionAccess'
+				  'FileControl'
+				  'SessionPriority')
+			inGroups: #().
+			  securityPolicy owner: newUser ].
+		  System commit ].
+
+"add users to groups"
+	  (AllUsers userWithId: 'GlobalsCurator') 
+		addGroup: 'GlobalsModificationGroup';
+		addGroup: 'DataCuratorGroup'.
+	  (AllUsers userWithId: 'UserCurator') 
+		addGroup: 'ApplicationModificationGroup'.
+
+"install #rowanCompile ... needed by Jadeite for now"
+	#( 'GlobalsCurator' 'UserCurator' )
+	do: [:userId |
+		| userProfile |
+		userProfile := AllUsers userWithId: userId.
+		GsObjectSecurityPolicy 
+			setCurrent: userProfile defaultObjectSecurityPolicy 
+			while: [ 
+				(userProfile objectNamed: 'UserGlobals') at: #rowanCompile put: true.
+				userId = 'UserCurator'
+					ifTrue: [ self createUserCuratorSymbolDictionaryFor: userProfile ] ] ]
+
+]
+
 { #category : 'sett' }
 RowanSample6ProjectCreationSupport >> createSettProjectForSpecUrl: projectSpecUrl [
 	| projectName projectDefinition packageNames utils dirPath config |
@@ -209,6 +275,18 @@ RowanSample6ProjectCreationSupport >> createSettProjectForSpecUrl: projectSpecUr
 	dirPath := projectDefinition repositoryRootPath , utils pathNameDelimiter , 
 		projectDefinition configsPath, utils pathNameDelimiter.
 	config exportToUrl: 'file:', dirPath
+
+]
+
+{ #category : 'bootstrap' }
+RowanSample6ProjectCreationSupport >> createUserCuratorSymbolDictionaryFor: userProfile [
+
+	| symbolList newDict |
+	symbolList := userProfile symbolList.
+	newDict := SymbolDictionary new
+		name: #Application;
+		yourself.
+	userProfile insertDictionary: newDict at: symbolList size
 
 ]
 

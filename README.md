@@ -61,8 +61,13 @@ The following script creates the bootstrap package and configuration structure:
     forGroups: { 'core' }
 
 ```
-Before loading the bootstrap packages into the stone, we have to create users and symbol dictionaries to match our original stone structure. :
+Before loading the bootstrap packages into the stone, we have to create users and symbol dictionaries to match our original stone structure (run as DataCurator):
 ```Smalltalk
+Rowan projectTools create_sample6 createBootstrapUsersAndGroups
+```
+Then create the symbol dictionary as UserCurator:
+```Smalltalk
+Rowan projectTools create_sample6 createUserCuratorSymbolDictionary
 ```
 
 Use the following script to run the script using GsDevKit:
