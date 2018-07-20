@@ -7,6 +7,9 @@ The sett directory contains the application packages that have been converted fr
 
 The bootstrap directory contains the application packages needed to reproduce the starting state of the existing application stone, emulating the original symbol dictionary structure and set of users.
 
+1. [Setup](#setup)
+2. [Update](#update)
+
 ## Setup   
 ### Create rowan_sample6_3215 stone
 ```
