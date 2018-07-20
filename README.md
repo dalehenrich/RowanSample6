@@ -100,7 +100,7 @@ In this case, we've decided that instead of loading each of the packages into se
 	to: 'Application' 
 	forUserId: 'allusers'
 ```
-Use the following script to run the script using GsDevKit (covers [reconcile](#reconcile_the_sett_code_move_class_extensions_for_globals_classes_into_separate_packages) and [adjust](#adjust_sett_configuration_set_defaultSymboldictname_to_application)):
+Use the following script to run the script using GsDevKit (covers [reconcile](#reconcile-the-sett-code-move-class-extensions-for-globals-classes-into-separate-packages) and [adjust](#adjust-sett-configuration-set-defaultsymboldictname-to-applicationn)):
 ```
 ./newBuild_SystemUser_reconcile_sett
 ```
