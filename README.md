@@ -21,18 +21,38 @@ stopNetldi rowan_sample6_3215
 startNetldi rowan_sample6_3215
 
 ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_create_sett
+
 ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_bootstrap
 ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone//newBuild_SystemUser_split_load
 ```
-### Simulate SETT output
+### Create generated SETT package and configuration structure
+Create new package structure in `sett/src` and new configuration in `sett/configs`, simulating what would have been generated using SETT:
+
+```smalltalk
+  Rowan projectTools create_sample6 removeSettPackages.
+  Rowan projectTools create_sample6
+    createSettProjectForSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston'
 ```
-# To start fresh:
-#   rm -rf $GS_HOME/shared/repos/RowanSample6/sett/src/RowanSample6*
+
+Use the following script to run the script using GsDevKit:
+
+```
 ./newBuild_SystemUser_create_sett
 ```
 ### Create bootstrap code and create initial version of stone
-
+In order to simulate the application structure in the application stone prior to the introduction of Rowan, we have to use Rowan to create the structure and then remove the Rowan artifacts. In an actual installation, this step can be skipped.
+```smalltalk
+  Rowan projectTools create_sample6 removeBootstrapPackages.
+  Rowan projectTools create_sample6
+    createBootstrapProjectForSettSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston' 
+    bootstrapSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap.ston' 
+    defaultGroupName: 'core' 
+    globalsGroupName: 'globals' 
+    globalsUserId: 'GlobalsCurator' 
+    defaultSymbolDictName: 'Application'
 ```
-#   rm -rf $GS_HOME/shared/repos/RowanSample6/bootstrap/src/RowanSample6*
-./newBuild_SystemUser_bootstrap
+
+Use the following script to run the script using GsDevKit:
+```
+./newBuild_SystemUser_create_bootstrap
 ```

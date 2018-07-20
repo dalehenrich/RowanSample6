@@ -26,10 +26,15 @@ run
 commit
 
 run
-  Rowan projectTools create_sample6 removeSettPackages.
+  Rowan projectTools create_sample6 removeBootstrapPackages.
 
   Rowan projectTools create_sample6
-    createSettProjectForSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston'
+    createBootstrapProjectForSettSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston' 
+    bootstrapSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap.ston' 
+    defaultGroupName: 'core' 
+    globalsGroupName: 'globals' 
+    globalsUserId: 'GlobalsCurator' 
+    defaultSymbolDictName: 'Application'
 %
 commit
 
