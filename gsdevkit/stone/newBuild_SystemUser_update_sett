@@ -62,6 +62,23 @@ run
 %
 commit
 
+run
+Rowan projectTools reconcile
+	reconcileGlobalClassExtensionsForProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston'
+	defaultGroupName: 'core' 
+	globalsGroupName: 'globals'  
+	globalsUserId: 'GlobalsCurator' 
+	writeProject: true.
+%
+commit
+
+run
+  Rowan projectTools convert_sample6
+	setDefaultSymbolDictNameForConfiguration: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/sett/configs/Default.ston' 
+	to: 'Application' 
+	forUserId: 'allusers'
+%
+commit
   logout
 
   exit

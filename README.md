@@ -10,7 +10,9 @@ The bootstrap directory contains the application packages needed to reproduce th
 1. [Setup](#setup)
 2. [Update](#update)
 
-## Setup   
+## Setup
+This section mainly covers the creation of a stone that mirrors the symbol dictionary and user structure of an existing GemStone/S application.
+
 ### Create rowan_sample6_3215 stone
 ```
 createStone -g rowan_sample6_3215 3.2.15
@@ -74,3 +76,31 @@ Use the following script to run the script using GsDevKit:
 At this point you can use Jadeite to look at the symbol dictionaries for both `UserCurator` and `GlobalsCurator`.
 
 ## Update
+This section assumes that you have used SETT to convert your source code into Tonel format and are now ready to update a stone that contains your application so that Rowan and git can be used to manage the source code of your application moving forward.
+
+### Reconcile the Sett code: move class extensions for Globals classes into separate packages
+Since a Rowan package must be loaded into the symbol dictionary where the extension class resides, it is necessary to split out extension methods for classes that are not all a member of the same symbol dictionary. 
+The most common case is the Kernel GemStone class in the Globals symbol dictionary.
+The following expression scans all of the packages in the given project and moves the extension methods for Globals classes into separate packages:
+```smalltalk
+Rowan projectTools reconcile
+	reconcileGlobalClassExtensionsForProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston'
+	defaultGroupName: 'core' 
+	globalsGroupName: 'globals'  
+	globalsUserId: 'GlobalsCurator' 
+	writeProject: true.
+```
+The new package is created by tacking `-Globals` onto the package name of the original package.
+
+### Adjust Sett configuration: set defaultSymbolDictName to 'Application'
+In this case, we've decided that instead of loading each of the packages into separate symbol dictionaries, we will consolidate all of the application code in a single symbol dictionary call `Application`. The following code, updates the configuration with this information:
+```smalltalk
+  Rowan projectTools convert_sample6
+	setDefaultSymbolDictNameForConfiguration: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/sett/configs/Default.ston' 
+	to: 'Application' 
+	forUserId: 'allusers'
+```
+Use the following script to run the script using GsDevKit (covers [reconcile](#reconcile_the_sett_code_move_class_extensions_for_globals_classes_into_separate_packages) and [adjust](#adjust_sett_configuration_set_defaultSymboldictname_to_application)):
+```
+./newBuild_SystemUser_reconcile_sett
+```
