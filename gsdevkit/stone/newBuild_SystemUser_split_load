@@ -14,10 +14,41 @@ startTopaz $GEMSTONE_NAME -l << EOF
   iferr 2 stack
   iferr 3 exit
 
-# load default group 
+# create users and define UserCurator symbol dictionary
+  set user DataCurator p swordfish
+  login
+
+  input $ROWAN_PROJECTS_HOME/RowanSample6/topaz/setupProject.gs
+
+  logout
+
   set user UserCurator p swordfish
   login
 
+# create symbol dictionary
+run
+  | userProfile symbolList newDict |
+  userProfile := System myUserProfile.
+  symbolList := userProfile symbolList.
+  newDict := SymbolDictionary new
+        name: #Application;
+        yourself.
+%
+commit
+
+# add Application symbol dictionary as default symbol dictionary
+run
+  | config configUrl |
+  configUrl :=  'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_default.ston'.
+  config := RwAbstractProjectConfiguration fromUrl: configUrl.
+  config
+    conditionalPackageMapSpecsAtGemStoneUserId: 'allusers' setDefaultSymbolDictNameTo: 'Application'.
+  config
+    exportToUrl: configUrl.
+%
+commit
+
+# load default group 
 run
   Rowan projectTools load
     loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_default.ston'
