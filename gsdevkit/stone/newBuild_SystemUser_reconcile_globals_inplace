@@ -25,7 +25,16 @@ Rowan projectTools reconcile
 	defaultGroupName: 'default' 
 	globalsGroupName: 'globals  
 	globalsUserId: 'GlobalsCurator' 
-	writeProject: true
+	writeProject: true.
+%
+commit
+
+run
+	| url config |
+	url := 'file:$ROWAN_PROJECTS_HOME/RowanSample6/sett/configs/Default.ston'.
+	config := url asRwUlr asConfiguration.
+	config conditionalPackageMapSpecsAtGemStoneUserId: 'allusers' setDefaultSymbolDictNameTo: 'Application'.
+	config exportToUrl: url.
 %
 commit
 
