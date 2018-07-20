@@ -1,0 +1,30 @@
+RwProjectLoadConfiguration {
+	#name : 'Default',
+	#comment : '',
+	#version : '0.1.0',
+	#conditionalPackages : {
+		[
+			'gemstone'
+		] : {
+			'globals' : {
+				#packageNames : [
+					'RowanSample6-Tools'
+				]
+			}
+		}
+	},
+	#conditionalPackageMapSpecs : {
+			'SystemUser' : {
+				#packageNameToPlatformPropertiesMap : {
+					'RowanSample6-Tools' : {
+						'symbolDictName' : 'RowanTools'
+					}
+				}
+			}
+		}
+	},
+	#definedGroupNames : {
+		'globals' : [ ],
+		'default' : [ ]
+	}
+}

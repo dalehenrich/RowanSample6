@@ -1,6 +1,13 @@
 # RowanSample6
-Refinement of original work done in [RowanSample5 project](https://github.com/dalehenrich/RowanSample5)
+This project is an example of the process used to convert an existing GemStone/S application to use git for source code control and Rowan for source code control.
 
+This project is structured in such a way that all of the code and package artifacts are generated from scripts so that it can be adapted to simulate any number actual application structures.
+
+The sett directory contains the application packages that have been converted from the original source code control system to tonel format.
+
+The bootstrap directory contains the application packages needed to reproduce the starting state of the existing application stone, emulating the original symbol dictionary structure and set of users.
+
+   
 ### Create rowan_sample6_3215 stone
 ```
 createStone -g rowan_sample6_3215 3.2.15
@@ -14,7 +21,7 @@ stopNetldi rowan_sample6_3215
 startNetldi rowan_sample6_3215
 
 ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_create_sett
-ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_reconcile_globals
+ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_bootstrap
 ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone//newBuild_SystemUser_split_load
 ```
 ### Simulate SETT output
@@ -23,12 +30,9 @@ ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone//newBuild_SystemUser_spl
 #   rm -rf $GS_HOME/shared/repos/RowanSample6/sett/src/RowanSample6*
 ./newBuild_SystemUser_create_sett
 ```
-### Reconcile Global Extension methods
+### Create bootstrap code and create initial version of stone
+
 ```
-#   rm -rf $GS_HOME/shared/repos/RowanSample6/reconcile/src/RowanSample6*
-./newBuild_SystemUser_reconcile_globals
-```
-### Split load
-```
-./newBuild_SystemUser_split_load
+#   rm -rf $GS_HOME/shared/repos/RowanSample6/bootstrap/src/RowanSample6*
+./newBuild_SystemUser_bootstrap
 ```
