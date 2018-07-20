@@ -30,7 +30,7 @@ run
 
   Rowan projectTools create_sample6
     createBootstrapProjectForSettSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston' 
-    bootstrapSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap.ston' 
+    bootstrapSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_core.ston' 
     defaultGroupName: 'core' 
     globalsGroupName: 'globals' 
     globalsUserId: 'GlobalsCurator' 

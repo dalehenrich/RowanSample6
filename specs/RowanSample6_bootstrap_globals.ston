@@ -1,9 +1,11 @@
  RwSimpleProjectSpecification{
-	#specName : 'RowanSample6',
+	#specName : 'RowanSample6_bootstrap_globals',
 	#version : '0.2.0',
 	#projectUrl : 'https://github.com/dalehenrich/RowanSample6',
 	#configsPath : 'bootstrap/configs',
 	#repoPath : 'bootstrap/src',
 	#specsPath : 'specs',
-	#comment : 'Not used for loading .... only used for writing and loading the bootstrap packages and configurations'
+	#defaultConfigurationNames : [ 'Default' ],
+	#defaultGroupNames : [ 'globals' ],
+	#comment : 'Used for loading into the Globals symbol dictionary'
 }

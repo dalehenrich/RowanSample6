@@ -53,10 +53,10 @@ RwProjectLoadConfiguration {
 					'RowanSample6-Blue2-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
 					},
-					'RowanSample6-Yellow2-Extensions-Globals' : {
+					'RowanSample6-Red1-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
 					},
-					'RowanSample6-Red1-Extensions-Globals' : {
+					'RowanSample6-Yellow2-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
 					}
 				}
