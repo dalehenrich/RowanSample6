@@ -2,7 +2,7 @@
 run
 	| projectName projectDefinition packageNames utils dirPath |
 	projectName := 'RowanSample6'.
-	packageNames := { 'RowanSample6-GlobalsExtensions' }.
+	packageNames := { }.
 	1 to: 2 do: [:index |
 		#('Red' 'Yellow' 'Blue')
 		do: [:user |
@@ -25,7 +25,7 @@ run
 		do: [:user |
 			| classDefinition subclassDefinition packageName packageDefinition 
 				extensionPackageName className subclassName classExtensionDefinition 
-				methodSelector |
+				methodSelector objectClassExtensionDefinition byteArrayClassExtensionDefinition |
 			packageName := 'RowanSample6-', user, index printString, '-Core'.
 			className := user, 'Class', index printString.
 			subclassName := user, 'Subclass', index printString.
@@ -79,24 +79,39 @@ run
 										newForSelector: methodSelector asSymbol
 										protocol: '*', extensionPackageName asLowercase
 										source: methodSelector, ' ^2') ] ].
+	"Object and ByteArray extension methods per user"
+			methodSelector :=  'ext', user, index printString.
+			objectClassExtensionDefinition := (RwClassExtensionDefinition newForClassNamed: 'Object')
+				addInstanceMethodDefinition:
+					(RwMethodDefinition
+						newForSelector: methodSelector asSymbol
+						protocol: '*', extensionPackageName asLowercase
+						source: methodSelector, ' ^3');
+				addClassMethodDefinition:
+					(RwMethodDefinition
+						newForSelector: methodSelector asSymbol
+						protocol: '*', extensionPackageName asLowercase
+						source: methodSelector, ' ^3');
+				yourself.
+			byteArrayClassExtensionDefinition := (RwClassExtensionDefinition newForClassNamed: 'ByteArray')
+				addInstanceMethodDefinition:
+					(RwMethodDefinition
+						newForSelector: methodSelector asSymbol
+						protocol: '*', extensionPackageName asLowercase
+						source: methodSelector, ' ^4');
+				addClassMethodDefinition:
+					(RwMethodDefinition
+						newForSelector: methodSelector asSymbol
+						protocol: '*', extensionPackageName asLowercase
+						source: methodSelector, ' ^4');
+				yourself.
+	"add the extensions to the package"
 			packageDefinition := projectDefinition packageNamed: extensionPackageName.
-			packageDefinition addClassExtension: classExtensionDefinition ] ].
-	#('Red' 'Yellow' 'Blue')
-	do: [:user |
-		| globalsExtensionsPackageName className packageDefinition classExtensionDefinition methodSelector  |
-		globalsExtensionsPackageName := 'RowanSample6-GlobalsExtensions'.
-		className := 'Object'.
-		packageDefinition := projectDefinition packageNamed: globalsExtensionsPackageName.
-		classExtensionDefinition := packageDefinition classExtensions 
-			at: className
-			ifAbsentPut: [ RwClassExtensionDefinition newForClassNamed: className ].
-		methodSelector :=  'ext', user.
-		classExtensionDefinition
-			addInstanceMethodDefinition:
-				(RwMethodDefinition
-					newForSelector: methodSelector asSymbol
-					protocol: '*', globalsExtensionsPackageName asLowercase
-					source: methodSelector, ' ^3') ].
+			packageDefinition 
+				addClassExtension: classExtensionDefinition;
+				addClassExtension: objectClassExtensionDefinition;
+				addClassExtension: byteArrayClassExtensionDefinition;
+				yourself ] ].
 
 	"write"
 	Rowan projectTools write writeProjectDefinition: projectDefinition.
