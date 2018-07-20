@@ -6,33 +6,37 @@ RwProjectLoadConfiguration {
 		[
 			'gemstone'
 		] : {
+			'globals' : {
+				#packageNames : [
+					'RowanSample6-Blue1-Extensions-Globals',
+					'RowanSample6-Blue2-Extensions-Globals',
+					'RowanSample6-Red1-Extensions-Globals',
+					'RowanSample6-Red2-Extensions-Globals',
+					'RowanSample6-Yellow1-Extensions-Globals',
+					'RowanSample6-Yellow2-Extensions-Globals'
+				]
+			},
 			'default' : {
 				#packageNames : [
 					'RowanSample6-Blue1-Core',
 					'RowanSample6-Blue1-Extensions',
-					'RowanSample6-Blue1-Extensions-Globals',
 					'RowanSample6-Blue2-Core',
 					'RowanSample6-Blue2-Extensions',
-					'RowanSample6-Blue2-Extensions-Globals',
 					'RowanSample6-Red1-Core',
 					'RowanSample6-Red1-Extensions',
-					'RowanSample6-Red1-Extensions-Globals',
 					'RowanSample6-Red2-Core',
 					'RowanSample6-Red2-Extensions',
-					'RowanSample6-Red2-Extensions-Globals',
 					'RowanSample6-Yellow1-Core',
 					'RowanSample6-Yellow1-Extensions',
-					'RowanSample6-Yellow1-Extensions-Globals',
 					'RowanSample6-Yellow2-Core',
-					'RowanSample6-Yellow2-Extensions',
-					'RowanSample6-Yellow2-Extensions-Globals'
+					'RowanSample6-Yellow2-Extensions'
 				]
 			}
 		}
 	},
 	#conditionalPackageMapSpecs : {
 		'gemstone' : {
-			'SystemUser' : {
+			'GlobalsCurator' : {
 				#packageNameToPlatformPropertiesMap : {
 					'RowanSample6-Blue1-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
@@ -40,16 +44,16 @@ RwProjectLoadConfiguration {
 					'RowanSample6-Red2-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
 					},
-					'RowanSample6-Yellow2-Extensions-Globals' : {
-						'symbolDictName' : 'Globals'
-					},
-					'RowanSample6-Red1-Extensions-Globals' : {
-						'symbolDictName' : 'Globals'
-					},
 					'RowanSample6-Yellow1-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
 					},
 					'RowanSample6-Blue2-Extensions-Globals' : {
+						'symbolDictName' : 'Globals'
+					},
+					'RowanSample6-Yellow2-Extensions-Globals' : {
+						'symbolDictName' : 'Globals'
+					},
+					'RowanSample6-Red1-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
 					}
 				}
@@ -57,6 +61,7 @@ RwProjectLoadConfiguration {
 		}
 	},
 	#definedGroupNames : {
+		'globals' : [ ],
 		'default' : [ ]
 	}
 }

@@ -8,7 +8,10 @@ run
 	projectDefinitionSet := Rowan projectTools read readProjectSetForProjectDefinition: settProjectDefinition.
 
 	configExportMap := Rowan projectTools reconcile
-		reconcileGlobalClassExtensionsForProjectDefinitionSet: projectDefinitionSet.
+		reconcileGlobalClassExtensionsForProjectDefinitionSet: projectDefinitionSet
+		defaultGroupName: 'default'
+		globalsGroupName: 'globals'
+		globalsUserId: 'GlobalsCurator'.
 
 	reconcileProjectDefinition := Rowan projectTools create createProjectDefinitionFromSpecUrl: RowanSample6_Spec_Url_reconcile.
 
