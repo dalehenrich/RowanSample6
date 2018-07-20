@@ -13,7 +13,7 @@ RowanSample6ProjectCreationSupport >> _removePackagesFor: subProject [
 
 { #category : 'bootstrap' }
 RowanSample6ProjectCreationSupport >> createBootstrapProjectForSettSpecUrl: settProjectSpecUrl bootstrapSpecUrl: bootstrapProjectSpecUrl defaultGroupName: defaultGroupName globalsGroupName: globalsGroupName globalsUserId: globalsUserId defaultSymbolDictName: defaultSymbolDictName [
-	| settProjectDefinition projectDefinitionSet configExportMap reconcileProjectDefinition utils exportUrl |
+	| settProjectDefinition projectDefinitionSet configExportMap bootstrapProjectDefinition utils exportUrl dirPath |
 
 	utils := Rowan fileUtilities.
 
@@ -26,22 +26,30 @@ RowanSample6ProjectCreationSupport >> createBootstrapProjectForSettSpecUrl: sett
 		globalsGroupName: globalsGroupName
 		globalsUserId: globalsUserId.
 
-	reconcileProjectDefinition := Rowan projectTools create createProjectDefinitionFromSpecUrl: bootstrapProjectSpecUrl.
+	bootstrapProjectDefinition := Rowan projectTools create createProjectDefinitionFromSpecUrl: bootstrapProjectSpecUrl.
 
-	exportUrl := 'file:', reconcileProjectDefinition repositoryRootPath , utils pathNameDelimiter , 
-		reconcileProjectDefinition configsPath, utils pathNameDelimiter.
+	exportUrl := 'file:', bootstrapProjectDefinition repositoryRootPath , utils pathNameDelimiter , 
+		bootstrapProjectDefinition configsPath, utils pathNameDelimiter.
 
 	configExportMap keysAndValuesDo: [:config :ignored |
 		config
 			conditionalPackageMapSpecsAtGemStoneUserId: 'allusers' setDefaultSymbolDictNameTo:defaultSymbolDictName.
 		config exportToUrl: exportUrl  ].
 
+	dirPath := bootstrapProjectDefinition repositoryRootPath , utils pathNameDelimiter , 
+		bootstrapProjectDefinition repoPath.
+	utils ensureDirectoryExists: dirPath.
+	utils
+		writeStreamFor: 'properties.st'
+		in: dirPath
+		do: [ :fileStream | fileStream nextPutAll: '{ #format : ''tonel''}' ].	
+
 	"transfer packages from settProjectDefinition ... after reconcile ... so that we can write the packages in a separate src dir"
 
 	settProjectDefinition packages values do: [:packageDef |
-		reconcileProjectDefinition addPackage: packageDef ].
+		bootstrapProjectDefinition addPackage: packageDef ].
 
-	Rowan projectTools write writeProjectDefinition: reconcileProjectDefinition
+	Rowan projectTools write writeProjectDefinition: bootstrapProjectDefinition
 
 ]
 
