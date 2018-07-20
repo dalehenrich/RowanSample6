@@ -111,3 +111,33 @@ Note that the `sett/src`and `sett/configs` directories will be modified when the
 The [Reconcile](#reconcile) operation only needs to be done once ... in this project you should `checkout` the `reconcile_sett` branch where the results of the [reconcile](#reconcile-the-sett-code-move-class-extensions-for-globals-classes-into-separate-packages) have been saved.
 
 The update process involves creating a staging project and `adopting` the code in the image into the staging project so that the SETT package structure can be loaded into the stone.
+
+### Adopt existing application classes and methods into a Staging project
+In general the `adopt` process is used to create a single package in the staging project for each symbol dictionary used in the application. If extensions to class in Globals is involved, the process must be split into two operations one involving the Globals symbol dictionary and one involving the rest of the symbol dictionaries ... If multiple users with conflicting permissions are used to manage different symbol dicitonaries, the a single adopt call per user needs to be used.
+
+Here's the code used to adopt our project:
+```smalltalk
+Rowan projectTools convert_sample6
+	adoptStagingProjectNamed: 'Staging_RowanSample5_core' 
+	for: 'RowanSample6_core' 
+	fromProjectSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett_core.ston' 
+	isGlobalsUser: false 
+	projectSymbolDictionaries: {Red . Yellow. Blue . Globals }.
+Rowan projectTools convert_sample6
+	adoptStagingProjectNamed: 'Staging_RowanSample5_globals' 
+	for: 'RowanSample6_globals' 
+	fromProjectSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett_globals.ston' 
+	isGlobalsUser: true 
+	projectSymbolDictionaries: {Red . Yellow. Blue . Globals }.
+```
+Note that when executed a different user needs to be used for each call.
+
+
+
+
+
+
+```
+./newBuild_SystemUser_update_sett
+```
+

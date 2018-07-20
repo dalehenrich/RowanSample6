@@ -68,5 +68,37 @@ commit
 
   logout
 
+# staging project adopt _core
+  set user UserCurator p swordfish
+  login
+
+run
+  Rowan projectTools convert_sample6
+    adoptStagingProjectNamed: 'Staging_RowanSample5_core' 
+    for: 'RowanSample6_core' 
+    fromProjectSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett_core.ston' 
+    isGlobalsUser: false 
+    projectSymbolDictionaries: {Red . Yellow. Blue . Globals }.
+%
+commit
+
+  logout
+
+# staging project adopt _globals
+  set user GlobalsCurator p swordfish
+  login
+
+run
+  Rowan projectTools convert_sample6
+    adoptStagingProjectNamed: 'Staging_RowanSample5_globals' 
+    for: 'RowanSample6_core' 
+    fromProjectSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett_globals.ston' 
+    isGlobalsUser: true 
+    projectSymbolDictionaries: {Red . Yellow. Blue . Globals }.
+%
+commit
+
+  logout
+
   exit
 EOF
