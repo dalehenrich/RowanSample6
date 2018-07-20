@@ -65,10 +65,6 @@ Before loading the bootstrap packages into the stone, we have to create users an
 ```Smalltalk
 Rowan projectTools create_sample6 createBootstrapUsersAndGroups
 ```
-Then create the symbol dictionary as UserCurator:
-```Smalltalk
-Rowan projectTools create_sample6 createUserCuratorSymbolDictionary
-```
 
 Use the following script to run the script using GsDevKit:
 ```
