@@ -25,14 +25,15 @@ run
 commit
 
 run
-  UserGlobals
-    at: #'RowanSample6_Spec_Url'
-    put: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston'
+  false 
+    ifTrue: [
+      "remove all packages in sett subproject"
+      Rowan projectTools create_sample6 removeSettPackages ].
+
+  Rowan projectTools create_sample6
+    createSettProjectForSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston'
 %
 commit
-
-# do a "rm -rf $GS_HOME/shared/repos/RowanSample6/sett/src/RowanSample6*" to start fresh
-  input $ROWAN_PROJECTS_HOME/RowanSample6/topaz/createProject_sett.gs
 
   exit
 EOF
