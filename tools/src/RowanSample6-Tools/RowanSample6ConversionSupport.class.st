@@ -1,5 +1,5 @@
 Class {
 	#name : 'RowanSample6ConversionSupport',
-	#superclass : 'RwProjectTool',
+	#superclass : 'RowanSample6Tools',
 	#category : 'RowanSample6-Tools'
 }

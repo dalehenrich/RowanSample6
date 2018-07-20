@@ -26,9 +26,9 @@ run
 commit
 
 run
-  Rowan projectTools create_sample6 removeBootstrapPackages.
+  Rowan projectTools bootstrap_sample6 removeBootstrapPackages.
 
-  Rowan projectTools create_sample6
+  Rowan projectTools bootstrap_sample6
     createBootstrapProjectForSettSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston' 
     bootstrapSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_core.ston' 
     defaultGroupName: 'core' 
@@ -39,7 +39,7 @@ run
 commit
 
 run
-  Rowan projectTools create_sample6
+  Rowan projectTools bootstrap_sample6
     addPackageMapSpecsToConfiguration: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/bootstrap/configs/Default.ston' 
     forGroups: { 'core' }
 %
@@ -51,7 +51,7 @@ commit
   login
 
 run
-  Rowan projectTools create_sample6 createBootstrapUsersAndGroups.
+  Rowan projectTools bootstrap_sample6 createBootstrapUsersAndGroups.
 %
 commit
 

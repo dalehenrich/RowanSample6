@@ -44,9 +44,9 @@ For this project the packages are distributed across three different symbol dict
 
 The following script creates the bootstrap package and configuration structure:
 ```smalltalk
-  Rowan projectTools create_sample6 removeBootstrapPackages.
+  Rowan projectTools bootstrap_sample6 removeBootstrapPackages.
 "reconcile global extensions ... moving global extension methods to separate packages"
-  Rowan projectTools create_sample6
+  Rowan projectTools bootstrap_sample6
     createBootstrapProjectForSettSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston' 
     bootstrapSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_core.ston' 
     defaultGroupName: 'core' 
@@ -54,7 +54,7 @@ The following script creates the bootstrap package and configuration structure:
     globalsUserId: 'GlobalsCurator' 
     defaultSymbolDictName: 'Application'
 "Assign core packages to one of three symbol dictionaries: Red, Yellow, or Blue"
-  Rowan projectTools create_sample6
+  Rowan projectTools bootstrap_sample6
     addPackageMapSpecsToConfiguration: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/bootstrap/configs/Default.ston' 
     forGroups: { 'core' }
 
