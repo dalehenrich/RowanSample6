@@ -7,7 +7,7 @@ Class {
 { #category : 'private' }
 RowanSample6ProjectCreationSupport >> _removePackagesFor: subProject [
 
-	Rowan projectTool git performOnServer: 'rm -rf $ROWAN_PROJECTS_HOME/RowanSample6/', subProject, '/src/RowanSample6*' logging: false
+	Rowan projectTools git performOnServer: 'rm -rf $ROWAN_PROJECTS_HOME/RowanSample6/', subProject, '/src/RowanSample6*' logging: false
 
 ]
 
