@@ -32,7 +32,7 @@ commit
   login
 
 run
-  Rowan projectTools create_sample6 createBootstrapUsersAndGroups.
+  Rowan projectTools bootstrap_sample6 createBootstrapUsersAndGroups.
 %
 commit
 
