@@ -19,6 +19,8 @@ run
 		reconcileProjectDefinition configsPath, utils pathNameDelimiter.
 
 	configExportMap keysAndValuesDo: [:config :ignored |
+		config
+			conditionalPackageMapSpecsAtGemStoneUserId: 'allusers' setDefaultSymbolDictNameTo: 'Application'.
 		config exportToUrl: exportUrl  ].
 
 	"transfer packages from settProjectDefinition ... after reconcile ... so that we can write the packages in a separate src dir"

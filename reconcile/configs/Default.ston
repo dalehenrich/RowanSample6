@@ -36,6 +36,9 @@ RwProjectLoadConfiguration {
 	},
 	#conditionalPackageMapSpecs : {
 		'gemstone' : {
+			'allusers' : {
+				#defaultSymbolDictName : 'Application'
+			},
 			'GlobalsCurator' : {
 				#packageNameToPlatformPropertiesMap : {
 					'RowanSample6-Blue1-Extensions-Globals' : {

@@ -33,18 +33,7 @@ run
   newDict := SymbolDictionary new
         name: #Application;
         yourself.
-%
-commit
-
-# add Application symbol dictionary as default symbol dictionary
-run
-  | config configUrl |
-  configUrl :=  'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_default.ston'.
-  config := RwAbstractProjectConfiguration fromUrl: configUrl.
-  config
-    conditionalPackageMapSpecsAtGemStoneUserId: 'allusers' setDefaultSymbolDictNameTo: 'Application'.
-  config
-    exportToUrl: configUrl.
+  UserGlobals at: #rowanCompile put: true.
 %
 commit
 
@@ -61,6 +50,11 @@ commit
 # load globals group
   set user GlobalsCurator p swordfish
   login
+
+run
+  UserGlobals at: #rowanCompile put: true.
+%
+commit
 
 run
   Rowan projectTools load
