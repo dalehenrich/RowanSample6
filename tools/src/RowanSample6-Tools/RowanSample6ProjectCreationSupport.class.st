@@ -11,6 +11,40 @@ RowanSample6ProjectCreationSupport >> _removePackagesFor: subProject [
 
 ]
 
+{ #category : 'bootstrap' }
+RowanSample6ProjectCreationSupport >> createBootstrapProjectForSettSpecUrl: settProjectSpecUrl bootstrapSpecUrl: bootstrapProjectSpecUrl defaultGroupName: defaultGroupName globalsGroupName: globalsGroupName globalsUserId: globalsUserId defaultSymbolDictName: defaultSymbolDictName [
+	| settProjectDefinition projectDefinitionSet configExportMap reconcileProjectDefinition utils exportUrl |
+
+	utils := Rowan fileUtilities.
+
+	settProjectDefinition := Rowan projectTools create createProjectDefinitionFromSpecUrl: settProjectSpecUrl.
+	projectDefinitionSet := Rowan projectTools read readProjectSetForProjectDefinition: settProjectDefinition.
+
+	configExportMap := Rowan projectTools reconcile
+		reconcileGlobalClassExtensionsForProjectDefinitionSet: projectDefinitionSet
+		defaultGroupName: defaultGroupName
+		globalsGroupName: globalsGroupName
+		globalsUserId: globalsUserId.
+
+	reconcileProjectDefinition := Rowan projectTools create createProjectDefinitionFromSpecUrl: bootstrapProjectSpecUrl.
+
+	exportUrl := 'file:', reconcileProjectDefinition repositoryRootPath , utils pathNameDelimiter , 
+		reconcileProjectDefinition configsPath, utils pathNameDelimiter.
+
+	configExportMap keysAndValuesDo: [:config :ignored |
+		config
+			conditionalPackageMapSpecsAtGemStoneUserId: 'allusers' setDefaultSymbolDictNameTo:defaultSymbolDictName.
+		config exportToUrl: exportUrl  ].
+
+	"transfer packages from settProjectDefinition ... after reconcile ... so that we can write the packages in a separate src dir"
+
+	settProjectDefinition packages values do: [:packageDef |
+		reconcileProjectDefinition addPackage: packageDef ].
+
+	Rowan projectTools write writeProjectDefinition: reconcileProjectDefinition
+
+]
+
 { #category : 'sett' }
 RowanSample6ProjectCreationSupport >> createSettProjectForSpecUrl: projectSpecUrl [
 	| projectName projectDefinition packageNames utils dirPath config |
@@ -138,6 +172,13 @@ RowanSample6ProjectCreationSupport >> createSettProjectForSpecUrl: projectSpecUr
 	dirPath := projectDefinition repositoryRootPath , utils pathNameDelimiter , 
 		projectDefinition configsPath, utils pathNameDelimiter.
 	config exportToUrl: 'file:', dirPath
+
+]
+
+{ #category : 'bootstrap' }
+RowanSample6ProjectCreationSupport >> removeBootstrapPackages [
+
+	self _removePackagesFor: 'bootstrap'
 
 ]
 
