@@ -1,0 +1,18 @@
+{
+	"category" : "RowanSample6-Red1-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"gs_constraints" : [
+		[
+			"ivar1",
+			"RedSubclass1" ] ],
+	"gs_options" : [
+		 ],
+	"instvars" : [
+		"ivar1" ],
+	"name" : "RedClass1",
+	"pools" : [
+		 ],
+	"super" : "Object" }

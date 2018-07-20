@@ -1,0 +1,18 @@
+{
+	"category" : "RowanSample6-Yellow1-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"gs_constraints" : [
+		[
+			"ivar1",
+			"YellowSubclass1" ] ],
+	"gs_options" : [
+		 ],
+	"instvars" : [
+		"ivar1" ],
+	"name" : "YellowClass1",
+	"pools" : [
+		 ],
+	"super" : "Object" }

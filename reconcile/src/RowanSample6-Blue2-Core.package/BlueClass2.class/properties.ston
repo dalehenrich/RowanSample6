@@ -1,0 +1,18 @@
+{
+	"category" : "RowanSample6-Blue2-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"gs_constraints" : [
+		[
+			"ivar1",
+			"BlueSubclass2" ] ],
+	"gs_options" : [
+		 ],
+	"instvars" : [
+		"ivar1" ],
+	"name" : "BlueClass2",
+	"pools" : [
+		 ],
+	"super" : "Object" }

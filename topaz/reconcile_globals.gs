@@ -1,6 +1,6 @@
 
 run
-	| settProjectDefinition projectDefinitionSet configExportMap reconcileProjectDefinition utils |
+	| settProjectDefinition projectDefinitionSet configExportMap reconcileProjectDefinition utils exportUrl |
 
 	utils := Rowan fileUtilities.
 
@@ -16,11 +16,13 @@ run
 		reconcileProjectDefinition configsPath, utils pathNameDelimiter.
 
 	configExportMap keysAndValuesDo: [:config :ignored |
-		config exportUrl  ].
+		config exportToUrl: exportUrl  ].
 
-"need to transfer packages from sett to reconcile project defs"
+	"transfer packages from settProjectDefinition ... after reconcile ... so that we can write the packages in a separate src dir"
 
+	settProjectDefinition packages values do: [:packageDef |
+		reconcileProjectDefinition addPackage: packageDef ].
 
-	projectTools write writeProjectDefinition: reconcileProjectDefinition
+	Rowan projectTools write writeProjectDefinition: reconcileProjectDefinition
 %
 commit
