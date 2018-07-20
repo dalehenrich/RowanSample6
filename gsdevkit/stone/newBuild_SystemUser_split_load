@@ -1,0 +1,56 @@
+set -e
+. defStone.env
+export vers="3.2.15"
+
+rm -rf *.log *.out
+
+newExtent -s product/bin/extent0.dbf $GEMSTONE_NAME
+
+$ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.2.15/installRowan $GEMSTONE_NAME
+
+startTopaz $GEMSTONE_NAME -l << EOF
+
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 exit
+
+# load default group 
+  set user UserCurator p swordfish
+  login
+
+run
+  UserGlobals
+    at: #'RowanSample6_Spec_Url'
+    	put: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_default.ston';
+    at: #'RowanSample6_Root_Path'
+      put: '$ROWAN_PROJECTS_HOME/RowanSample6/';
+    at: #'RowanSample6_Project_Name'
+      put: 'RowanSample6_Default';
+    yourself
+%
+commit
+
+  input $ROWAN_PROJECTS_HOME/RowanSample6/topaz/loadProject_split.gs
+
+  logout
+
+# load globals group
+  set user GlobalsCurator p swordfish
+  login
+
+run
+  UserGlobals
+    at: #'RowanSample6_Spec_Url'
+    	put: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_globals.ston';
+    at: #'RowanSample6_Root_Path'
+      put: '$ROWAN_PROJECTS_HOME/RowanSample6/';
+    at: #'RowanSample6_Project_Name'
+      put: 'RowanSample6_Globals';
+    yourself
+%
+commit
+
+  input $ROWAN_PROJECTS_HOME/RowanSample6/topaz/loadProject_split.gs
+
+  exit
+EOF

@@ -1,0 +1,11 @@
+ RwSimpleProjectSpecification{
+	#specName : 'RowanSample6_default',
+	#version : '0.2.0',
+	#projectUrl : 'https://github.com/dalehenrich/RowanSample6',
+	#configsPath : 'reconcile/configs',
+	#repoPath : 'reconcile/src',
+	#specsPath : 'specs',
+	#defaultConfigurationNames : [ 'Default' ],
+	#defaultGroupNames : [ 'default' ],
+	#comment : 'Use this spec for loading the default group'
+}
