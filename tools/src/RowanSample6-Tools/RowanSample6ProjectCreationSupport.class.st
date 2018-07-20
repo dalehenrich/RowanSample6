@@ -5,6 +5,21 @@ Class {
 }
 
 { #category : 'private' }
+RowanSample6ProjectCreationSupport >> _createSymbolDictionariesFor: userProfile [
+
+	| symDicts |
+	GsObjectSecurityPolicy 
+		setCurrent: userProfile defaultObjectSecurityPolicy 
+		while: [	
+			symDicts := #(#Red #Yellow #Blue #Application ) 
+				collect: [:name | SymbolDictionary new
+					name: name;
+					yourself ] ].
+	 ^ symDicts
+
+]
+
+{ #category : 'private' }
 RowanSample6ProjectCreationSupport >> _removePackagesFor: subProject [
 
 	Rowan projectTools git performOnServer: 'rm -rf $ROWAN_PROJECTS_HOME/RowanSample6/', subProject, '/src/RowanSample6*' logging: false
@@ -89,6 +104,8 @@ RowanSample6ProjectCreationSupport >> createBootstrapUsersAndGroups [
 
 	"Should be run as SystemUser"
 
+	| symDicts |
+
 "create groups"
 	  (AllGroups includes: 'GlobalsModificationGroup')
 		ifFalse: [AllGroups add: 'GlobalsModificationGroup' ].
@@ -134,17 +151,25 @@ RowanSample6ProjectCreationSupport >> createBootstrapUsersAndGroups [
 	  (AllUsers userWithId: 'UserCurator') 
 		addGroup: 'ApplicationModificationGroup'.
 
-"install #rowanCompile ... needed by Jadeite for now"
+"install #rowanCompile ... needed by Jadeite for now ... create symbol dictionaries"
 	#( 'GlobalsCurator' 'UserCurator' )
 	do: [:userId |
 		| userProfile |
 		userProfile := AllUsers userWithId: userId.
 		GsObjectSecurityPolicy 
 			setCurrent: userProfile defaultObjectSecurityPolicy 
-			while: [ 
-				(userProfile objectNamed: 'UserGlobals') at: #rowanCompile put: true.
-				userId = 'UserCurator'
-					ifTrue: [ self createUserCuratorSymbolDictionaryFor: userProfile ] ] ]
+			while: [ (userProfile objectNamed: 'UserGlobals') at: #rowanCompile put: true].
+		userId = 'UserCurator'
+			ifTrue: [ symDicts := self _createSymbolDictionariesFor: userProfile ] ].
+
+"install symbol dictionaries for each user"
+	#( 'GlobalsCurator' 'UserCurator' )
+	do: [:userId |
+		| userProfile symbolList |
+		userProfile := AllUsers userWithId: userId.
+		symbolList := userProfile symbolList.
+		symDicts do: [:newDict |
+			userProfile insertDictionary: newDict at: symbolList size ] ].
 
 ]
 
@@ -275,18 +300,6 @@ RowanSample6ProjectCreationSupport >> createSettProjectForSpecUrl: projectSpecUr
 	dirPath := projectDefinition repositoryRootPath , utils pathNameDelimiter , 
 		projectDefinition configsPath, utils pathNameDelimiter.
 	config exportToUrl: 'file:', dirPath
-
-]
-
-{ #category : 'bootstrap' }
-RowanSample6ProjectCreationSupport >> createUserCuratorSymbolDictionaryFor: userProfile [
-
-	| symbolList newDict |
-	symbolList := userProfile symbolList.
-	newDict := SymbolDictionary new
-		name: #Application;
-		yourself.
-	userProfile insertDictionary: newDict at: symbolList size
 
 ]
 
