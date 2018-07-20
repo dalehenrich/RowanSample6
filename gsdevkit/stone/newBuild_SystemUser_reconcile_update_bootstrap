@@ -1,0 +1,68 @@
+set -e
+. defStone.env
+export vers="3.2.15"
+
+rm -rf *.log *.out
+
+newExtent -s product/bin/extent0.dbf $GEMSTONE_NAME
+
+$ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.2.15/installRowan $GEMSTONE_NAME
+
+startTopaz $GEMSTONE_NAME -l << EOF
+
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 exit
+
+  set user SystemUser p swordfish
+  login
+
+run
+  "install tools"
+  Rowan projectTools load
+    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_tools.ston'
+    projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
+%
+commit
+
+  logout
+
+# create users and groups and symbol dicts
+  set user SystemUser p swordfish
+  login
+
+run
+  Rowan projectTools create_sample6 createBootstrapUsersAndGroups.
+%
+commit
+
+  logout
+
+# bootstrap _core load
+  set user UserCurator p swordfish
+  login
+
+run
+  Rowan projectTools load
+    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_core.ston'
+    projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
+%
+commit
+
+  logout
+
+# bootstrap _globals load
+  set user GlobalsCurator p swordfish
+  login
+
+run
+  Rowan projectTools load
+    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_globals.ston'
+    projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
+%
+commit
+
+  logout
+
+  exit
+EOF
