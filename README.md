@@ -21,9 +21,7 @@ stopNetldi rowan_sample6_3215
 startNetldi rowan_sample6_3215
 
 ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_create_sett
-
-ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_bootstrap
-ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone//newBuild_SystemUser_split_load
+ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_create_bootstrap
 ```
 ### Create generated SETT package and configuration structure
 Create new package structure in `sett/src` and new configuration in `sett/configs`, simulating what would have been generated using SETT:
