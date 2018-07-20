@@ -1,4 +1,5 @@
 # RowanSample6
+Refinement of original work done in [RowanSample5 project](https://github.com/dalehenrich/RowanSample5)
 
 ### Create rowan_sample6_3215 stone
 ```
