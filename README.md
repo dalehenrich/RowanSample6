@@ -7,7 +7,7 @@ The sett directory contains the application packages that have been converted fr
 
 The bootstrap directory contains the application packages needed to reproduce the starting state of the existing application stone, emulating the original symbol dictionary structure and set of users.
 
-   
+## Setup   
 ### Create rowan_sample6_3215 stone
 ```
 createStone -g rowan_sample6_3215 3.2.15
@@ -69,3 +69,5 @@ Use the following script to run the script using GsDevKit:
 ./newBuild_SystemUser_create_bootstrap
 ```
 At this point you can use Jadeite to look at the symbol dictionaries for both `UserCurator` and `GlobalsCurator`.
+
+## Update
