@@ -6,7 +6,7 @@ rm -rf *.log *.out
 
 newExtent -s product/bin/extent0.dbf $GEMSTONE_NAME
 
-$GS_HOME/shared/repos/Rowan/platforms/gemstone/topaz/3.2.15/installRowan $GEMSTONE_NAME
+$ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.2.15/installRowan $GEMSTONE_NAME
 
 startTopaz $GEMSTONE_NAME -l << EOF
 
