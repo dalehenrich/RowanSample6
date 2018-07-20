@@ -18,6 +18,13 @@ startTopaz $GEMSTONE_NAME -l << EOF
   login
 
 run
+  Rowan projectTools load
+    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_tools.ston'
+    projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
+%
+commit
+
+run
   UserGlobals
     at: #'RowanSample6_Spec_Url'
     put: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston'

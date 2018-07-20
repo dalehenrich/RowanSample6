@@ -1,10 +1,11 @@
  RwSimpleProjectSpecification{
-	#specName : 'RowanSample6',
+	#specName : 'RowanSample6_tools',
 	#version : '0.2.0',
 	#projectUrl : 'https://github.com/dalehenrich/RowanSample6',
-	#configsPath : 'sett/configs',
-	#repoPath : 'sett/src',
+	#configsPath : 'tools/configs',
+	#repoPath : 'tools/src',
 	#specsPath : 'specs',
 	#defaultConfigurationNames : [ 'Default' ],
-	#comment : 'Not used for loading ... only used for writing out the initial packages produced by topaz/createProject_sett.gs'
+	#defaultGroupNames : [ 'tools' ],
+	#comment : 'Use for loading the RowanSample6 supporting tools'
 }
