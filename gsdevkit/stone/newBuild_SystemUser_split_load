@@ -19,18 +19,11 @@ startTopaz $GEMSTONE_NAME -l << EOF
   login
 
 run
-  UserGlobals
-    at: #'RowanSample6_Spec_Url'
-    	put: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_default.ston';
-    at: #'RowanSample6_Root_Path'
-      put: '$ROWAN_PROJECTS_HOME/RowanSample6/';
-    at: #'RowanSample6_Project_Name'
-      put: 'RowanSample6_Default';
-    yourself
+  Rowan projectTools load
+    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_default.ston'
+    projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
 %
 commit
-
-  input $ROWAN_PROJECTS_HOME/RowanSample6/topaz/loadProject_split.gs
 
   logout
 
@@ -39,18 +32,11 @@ commit
   login
 
 run
-  UserGlobals
-    at: #'RowanSample6_Spec_Url'
-    	put: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_globals.ston';
-    at: #'RowanSample6_Root_Path'
-      put: '$ROWAN_PROJECTS_HOME/RowanSample6/';
-    at: #'RowanSample6_Project_Name'
-      put: 'RowanSample6_Globals';
-    yourself
+  Rowan projectTools load
+    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_globals.ston'
+    projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
 %
 commit
-
-  input $ROWAN_PROJECTS_HOME/RowanSample6/topaz/loadProject_split.gs
 
   exit
 EOF
