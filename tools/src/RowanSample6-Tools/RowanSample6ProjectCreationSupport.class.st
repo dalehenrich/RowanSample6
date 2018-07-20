@@ -12,6 +12,35 @@ RowanSample6ProjectCreationSupport >> _removePackagesFor: subProject [
 ]
 
 { #category : 'bootstrap' }
+RowanSample6ProjectCreationSupport >> addPackageMapSpecsToConfiguration: configurationUrl forGroups: groupNames [
+	| utils config visitor |
+
+	utils := Rowan fileUtilities.
+
+	config := configurationUrl asRwUrl asConfiguration.
+
+	visitor := RwProjectLoadConfigurationVisitor new
+		platformAttributes:  Rowan platformConfigurationAttributes;
+		groupNames: groupNames;
+		yourself.
+	visitor visit: config.
+
+	visitor packageNames do: [:packageName |
+		| symbolDictName |
+		(packageName beginsWith: 'RowanSample6-Blue')
+			ifTrue: [ symbolDictName := 'Blue' ].
+		(packageName beginsWith: 'RowanSample6-Red')
+			ifTrue: [ symbolDictName := 'Red' ].
+		(packageName beginsWith: 'RowanSample6-Yellow')
+			ifTrue: [ symbolDictName := 'Yellow' ].
+		config
+			conditionalPackageMapSpecsAtGemStoneUserId: 'allusers'  andPackageName: packageName setSymbolDictNameTo: symbolDictName ].
+
+	config exportToUrl: configurationUrl
+
+]
+
+{ #category : 'bootstrap' }
 RowanSample6ProjectCreationSupport >> createBootstrapProjectForSettSpecUrl: settProjectSpecUrl bootstrapSpecUrl: bootstrapProjectSpecUrl defaultGroupName: defaultGroupName globalsGroupName: globalsGroupName globalsUserId: globalsUserId defaultSymbolDictName: defaultSymbolDictName [
 	| settProjectDefinition projectDefinitionSet configExportMap bootstrapProjectDefinition utils exportUrl dirPath |
 

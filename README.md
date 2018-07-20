@@ -40,16 +40,29 @@ Use the following script to run the script using GsDevKit:
 ./newBuild_SystemUser_create_sett
 ```
 ### Create bootstrap code and create initial version of stone
-In order to simulate the application structure in the application stone prior to the introduction of Rowan, we have to use Rowan to create the structure and then remove the Rowan artifacts. In an actual installation, this step can be skipped.
+In order to simulate the application structure in the application stone prior to the introduction of Rowan, we have to use Rowan to create the structures, users and symbol dictionaries. In an actual installation, this step can be skipped.
+
+For this project the packages are distributed across three different symbol dictionaries: Red, Yellow, and Blue ... extension methods for classes in the Globals symbol dictionary need to be loaded by our GlobalsCurator user. Application code is loaded by the UserCurator.
+
+The following script creates the bootstrap package and configuration structure:
 ```smalltalk
   Rowan projectTools create_sample6 removeBootstrapPackages.
+"reconcile global extensions ... moving global extension methods to separate packages"
   Rowan projectTools create_sample6
     createBootstrapProjectForSettSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston' 
-    bootstrapSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap.ston' 
+    bootstrapSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_core.ston' 
     defaultGroupName: 'core' 
     globalsGroupName: 'globals' 
     globalsUserId: 'GlobalsCurator' 
     defaultSymbolDictName: 'Application'
+"Assign core packages to one of three symbol dictionaries: Red, Yellow, or Blue"
+  Rowan projectTools create_sample6
+    addPackageMapSpecsToConfiguration: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/bootstrap/configs/Default.ston' 
+    forGroups: { 'core' }
+
+```
+Before loading the bootstrap packages into the stone, we have to create users and symbol dictionaries to match our original stone structure. :
+```Smalltalk
 ```
 
 Use the following script to run the script using GsDevKit:

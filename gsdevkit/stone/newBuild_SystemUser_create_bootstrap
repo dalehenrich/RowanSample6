@@ -38,5 +38,12 @@ run
 %
 commit
 
+run
+  Rowan projectTools create_sample6
+    addPackageMapSpecsToConfiguration: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/bootstrap/configs/Default.ston' 
+    forGroups: { 'core' }
+%
+commit
+
   exit
 EOF

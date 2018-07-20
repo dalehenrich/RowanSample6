@@ -37,6 +37,44 @@ RwProjectLoadConfiguration {
 	#conditionalPackageMapSpecs : {
 		'gemstone' : {
 			'allusers' : {
+				#packageNameToPlatformPropertiesMap : {
+					'RowanSample6-Red2-Extensions' : {
+						'symbolDictName' : 'Red'
+					},
+					'RowanSample6-Blue2-Extensions' : {
+						'symbolDictName' : 'Blue'
+					},
+					'RowanSample6-Blue2-Core' : {
+						'symbolDictName' : 'Blue'
+					},
+					'RowanSample6-Blue1-Extensions' : {
+						'symbolDictName' : 'Blue'
+					},
+					'RowanSample6-Blue1-Core' : {
+						'symbolDictName' : 'Blue'
+					},
+					'RowanSample6-Red1-Extensions' : {
+						'symbolDictName' : 'Red'
+					},
+					'RowanSample6-Red2-Core' : {
+						'symbolDictName' : 'Red'
+					},
+					'RowanSample6-Yellow2-Extensions' : {
+						'symbolDictName' : 'Yellow'
+					},
+					'RowanSample6-Yellow2-Core' : {
+						'symbolDictName' : 'Yellow'
+					},
+					'RowanSample6-Yellow1-Core' : {
+						'symbolDictName' : 'Yellow'
+					},
+					'RowanSample6-Red1-Core' : {
+						'symbolDictName' : 'Red'
+					},
+					'RowanSample6-Yellow1-Extensions' : {
+						'symbolDictName' : 'Yellow'
+					}
+				},
 				#defaultSymbolDictName : 'Application'
 			},
 			'GlobalsCurator' : {
@@ -53,10 +91,10 @@ RwProjectLoadConfiguration {
 					'RowanSample6-Blue2-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
 					},
-					'RowanSample6-Red1-Extensions-Globals' : {
+					'RowanSample6-Yellow2-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
 					},
-					'RowanSample6-Yellow2-Extensions-Globals' : {
+					'RowanSample6-Red1-Extensions-Globals' : {
 						'symbolDictName' : 'Globals'
 					}
 				}
