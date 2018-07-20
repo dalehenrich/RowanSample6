@@ -70,3 +70,4 @@ Use the following script to run the script using GsDevKit:
 ```
 ./newBuild_SystemUser_create_bootstrap
 ```
+### Login as UserCurator and GlobalsCurator using Jadeite and view classes and methds

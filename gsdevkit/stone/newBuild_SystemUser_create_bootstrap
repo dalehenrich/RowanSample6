@@ -57,5 +57,29 @@ commit
 
   logout
 
+  set user UserCurator p swordfish
+  login
+
+run
+  Rowan projectTools load
+    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_core.ston'
+    projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
+%
+commit
+
+  logout
+
+  set user GlobalsCurator p swordfish
+  login
+
+run
+  Rowan projectTools load
+    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_bootstrap_globals.ston'
+    projectRootPath: '$ROWAN_PROJECTS_HOME/RowanSample6/'.
+%
+commit
+
+  logout
+
   exit
 EOF
