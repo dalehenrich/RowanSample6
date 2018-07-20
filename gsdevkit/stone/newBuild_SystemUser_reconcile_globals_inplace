@@ -23,7 +23,7 @@ run
 Rowan projectTools reconcile
 	reconcileGlobalClassExtensionsForProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett.ston'
 	defaultGroupName: 'default' 
-	globalsGroupName: 'globals  
+	globalsGroupName: 'globals'  
 	globalsUserId: 'GlobalsCurator' 
 	writeProject: true.
 %
