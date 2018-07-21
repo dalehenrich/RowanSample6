@@ -46,9 +46,6 @@ RowanSample6ConversionSupport >> adoptStagingProjectNamed: stagingProjectName fo
 
 	"Adopt symbol dicts into staging project"
 	projectSetDefinitionToLoad := Rowan projectTools read readProjectSetForProjectDefinition: diskProjectDefinition.
-	UserGlobals
-		at: #RowanSample5_client_projectSetDefinitionToLoad
-		put: projectSetDefinitionToLoad.
 
 	"adopt Globals extension methods and all application symbol dictionaries"
 
@@ -61,9 +58,9 @@ RowanSample6ConversionSupport >> adoptStagingProjectNamed: stagingProjectName fo
 					classExtension instanceMethodDefinitions valuesDo: [:methodDefinition |
 						Rowan packageTools adopt
 							adoptMethod: methodDefinition selector inClassNamed: classExtension name isMeta: false intoPackageNamed: 'Staging-Globals' ].
-					classExtension classMethodDefinitions valuesDo: [[:methodDefinition |
+					classExtension classMethodDefinitions valuesDo: [:methodDefinition |
 						Rowan packageTools adopt
-							adoptMethod: methodDefinition selector inClassNamed: classExtension name isMeta: true intoPackageNamed: 'Staging-Globals']]]]]]
+							adoptMethod: methodDefinition selector inClassNamed: classExtension name isMeta: true intoPackageNamed: 'Staging-Globals']]]]]
 		ifFalse: [ 
 			projectSymbolDictionaries do: [:dict |
 			dict name == #Globals
@@ -80,6 +77,8 @@ RowanSample6ConversionSupport >> adoptStagingProjectNamed: stagingProjectName fo
 
 	projectSetDefinitionToLoad
 		addProject: stagingProjectDefinition.
+
+	^projectSetDefinitionToLoad
 
 ]
 

@@ -73,12 +73,16 @@ commit
   login
 
 run
-  Rowan projectTools convert_sample6
+  | projectSetDefinitionToLoad |
+  projectSetDefinitionToLoad := Rowan projectTools convert_sample6
     adoptStagingProjectNamed: 'Staging_RowanSample5_core' 
     for: 'RowanSample6_core' 
     fromProjectSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett_core.ston' 
     isGlobalsUser: false 
     projectSymbolDictionaries: {Red . Yellow. Blue . Globals }.
+  UserGlobals 
+    at: #'RowanSample6_core_projectSetDefinitionToLoad'
+    put: projectSetDefinitionToLoad
 %
 commit
 
@@ -89,12 +93,16 @@ commit
   login
 
 run
-  Rowan projectTools convert_sample6
+  | projectSetDefinitionToLoad |
+  projectSetDefinitionToLoad := Rowan projectTools convert_sample6
     adoptStagingProjectNamed: 'Staging_RowanSample5_globals' 
-    for: 'RowanSample6_core' 
+    for: 'RowanSample6_globals' 
     fromProjectSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett_globals.ston' 
     isGlobalsUser: true 
     projectSymbolDictionaries: {Red . Yellow. Blue . Globals }.
+  UserGlobals 
+    at: #'RowanSample6_globals_projectSetDefinitionToLoad'
+    put: projectSetDefinitionToLoad
 %
 commit
 
