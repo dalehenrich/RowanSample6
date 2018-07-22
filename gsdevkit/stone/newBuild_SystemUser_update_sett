@@ -108,5 +108,37 @@ commit
 
   logout
 
+# staging project load _core
+  set user UserCurator p swordfish
+  login
+
+run
+  | projectSetDefinitionToLoad |
+  projectSetDefinitionToLoad := UserGlobals at: #'RowanSample6_core_projectSetDefinitionToLoad'.
+  Rowan projectTools load loadProjectSetDefinition: projectSetDefinitionToLoad.
+  Rowan projectTools load _markProjectSetNotDirty: projectSetDefinitionToLoad.
+  Rowan projectTools disown
+    disownProjectNamed: 'Staging_RowanSample5_core'.
+%
+commit
+
+  logout
+
+# staging project load _globals
+  set user GlobalsCurator p swordfish
+  login
+
+run
+  | projectSetDefinitionToLoad |
+  projectSetDefinitionToLoad := UserGlobals at: #'RowanSample6_globals_projectSetDefinitionToLoad'.
+  Rowan projectTools load loadProjectSetDefinition: projectSetDefinitionToLoad.
+  Rowan projectTools load _markProjectSetNotDirty: projectSetDefinitionToLoad.
+  Rowan projectTools disown
+    disownProjectNamed: 'Staging_RowanSample5_globals'.
+%
+commit
+
+  logout
+
   exit
 EOF
