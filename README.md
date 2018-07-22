@@ -28,6 +28,8 @@ startNetldi rowan_sample6_3215
 
 ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_create_sett
 ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_create_bootstrap
+ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_reconcile_sett
+ln -s $GS_HOME/shared/repos/RowanSample6/gsdevkit/stone/newBuild_SystemUser_update_sett
 ```
 ### Create generated SETT package and configuration structure
 Create new package structure in `sett/src` and new configuration in `sett/configs`, simulating what would have been generated using SETT:
@@ -101,7 +103,7 @@ In this case, we've decided that instead of loading each of the packages into se
 	to: 'Application' 
 	forUserId: 'allusers'
 ```
-Use the following script to run the script using GsDevKit (covers [reconcile](#reconcile-the-sett-code-move-class-extensions-for-globals-classes-into-separate-packages) and [adjust](#adjust-sett-configuration-set-defaultsymboldictname-to-applicationn)):
+Use the following to run the script against GsDevKit stones (covers [reconcile](#reconcile-the-sett-code-move-class-extensions-for-globals-classes-into-separate-packages) and [adjust](#adjust-sett-configuration-set-defaultsymboldictname-to-applicationn)):
 ```
 ./newBuild_SystemUser_reconcile_sett
 ```
@@ -117,26 +119,53 @@ In general the `adopt` process is used to create a single package in the staging
 
 Here's the code used to adopt our project:
 ```smalltalk
-Rowan projectTools convert_sample6
+"As UserCurator"
+| projectSetDefinitionToLoad |
+  projectSetDefinitionToLoad := Rowan projectTools convert_sample6
 	adoptStagingProjectNamed: 'Staging_RowanSample5_core' 
 	for: 'RowanSample6_core' 
 	fromProjectSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett_core.ston' 
 	isGlobalsUser: false 
 	projectSymbolDictionaries: {Red . Yellow. Blue . Globals }.
-Rowan projectTools convert_sample6
+  UserGlobals 
+    at: #'RowanSample6_core_projectSetDefinitionToLoad'
+    put: projectSetDefinitionToLoad
+```
+```smalltalk
+"As GlobalsCurator"
+| projectSetDefinitionToLoad |
+  projectSetDefinitionToLoad := Rowan projectTools convert_sample6
 	adoptStagingProjectNamed: 'Staging_RowanSample5_globals' 
 	for: 'RowanSample6_globals' 
-	fromProjectSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett_globals.ston' 
+	fromProjectSpecUrl: 'file:$ROWAN_PROJECTS_HOME/RowanSample6/specs/RowanSample6_sett_globals.ston'
 	isGlobalsUser: true 
 	projectSymbolDictionaries: {Red . Yellow. Blue . Globals }.
+  UserGlobals 
+    at: #'RowanSample6_globals_projectSetDefinitionToLoad'
+    put: projectSetDefinitionToLoad
 ```
-Note that when executed a different user needs to be used for each call.
+The `projectSetDefinitionToLoad` is stashed in UserGlobals, because it is used in the finale load, where both the staging project and application project are needed"
+### Load application and staging project ... disown staging project
+```smalltalk
+  "as UserCurator"
+  | projectSetDefinitionToLoad |
+  projectSetDefinitionToLoad := UserGlobals at: #'RowanSample6_core_projectSetDefinitionToLoad'.
+  Rowan projectTools load loadProjectSetDefinition: projectSetDefinitionToLoad.
+  Rowan projectTools load _markProjectSetNotDirty: projectSetDefinitionToLoad.
+  Rowan projectTools disown
+    disownProjectNamed: 'Staging_RowanSample5_core'.
+```
+```smalltalk
+  "as GlobalsCurator"
+  | projectSetDefinitionToLoad |
+  projectSetDefinitionToLoad := UserGlobals at: #'RowanSample6_globals_projectSetDefinitionToLoad'.
+  Rowan projectTools load loadProjectSetDefinition: projectSetDefinitionToLoad.
+  Rowan projectTools load _markProjectSetNotDirty: projectSetDefinitionToLoad.
+  Rowan projectTools disown
+    disownProjectNamed: 'Staging_RowanSample5_globals'.
+```
 
-
-
-
-
-
+Use the following to run the script against GsDevKit stones
 ```
 ./newBuild_SystemUser_update_sett
 ```
