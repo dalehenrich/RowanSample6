@@ -7,9 +7,9 @@ The sett directory contains the application packages that have been converted fr
 
 The bootstrap directory contains the application packages needed to reproduce the starting state of the existing application stone, emulating the original symbol dictionary structure and set of users.
 
-1. [Setup](#setup)
-2. [Reconcile](#reconcile)
-3. [Update](#update)
+1. [Setup](#setup) - process used to create or update the project artifacts (packages and configurations)
+2. [Reconcile](#reconcile) - process used to adjust package structure produced by SETT to match Rowan requirements
+3. [Update](#update) - process used to load an application using Rowan into a stone where the classes and methods already exist
 
 ## Setup
 This section mainly covers the creation of a stone that mirrors the symbol dictionary and user structure of an existing GemStone/S application.
