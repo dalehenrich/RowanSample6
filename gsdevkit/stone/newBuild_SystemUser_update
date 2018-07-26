@@ -1,0 +1,63 @@
+set -e
+. defStone.env
+export vers="3.2.15"
+
+rm -rf *.log *.out
+
+# intended to be run against an existing stone after newBuild_SystemUser_update_sett has been run
+#   will install new Rowan code, new custom Rowan tools, new _core and new _globals
+#
+startTopaz $GEMSTONE_NAME -l << EOF
+
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 exit
+
+  set user SystemUser p swordfish
+  login
+
+run
+  "update Rowan projects"
+  Rowan projectTools load
+    loadProjectNamed: 'Cypress';
+    loadProjectNamed: 'STON';
+    loadProjectNamed: 'Tonel';
+    loadProjectNamed: 'Rowan';
+    yourself
+%
+commit
+run
+  "update Custom Rowan tools"
+  Rowan projectTools load
+    loadProjectNamed: 'RowanSample6_tools'
+%
+commit
+
+  logout
+
+  set user UserCurator p swordfish
+  login
+
+run
+  "update _core project"
+  Rowan projectTools load
+    loadProjectNamed: 'RowanSample6_core'
+%
+commit
+
+  logout
+
+  set user GlobalsCurator p swordfish
+  login
+
+run
+  "update _globals project"
+  Rowan projectTools load
+    loadProjectNamed: 'RowanSample6_globals'
+%
+commit
+
+  logout
+
+  exit
+EOF

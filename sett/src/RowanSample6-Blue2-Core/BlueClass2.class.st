@@ -14,5 +14,5 @@ Class {
 }
 
 { #category : 'accessing' }
-BlueClass2 >> blue2 [ ^1
+BlueClass2 >> blue2 [ ^100
 ]
