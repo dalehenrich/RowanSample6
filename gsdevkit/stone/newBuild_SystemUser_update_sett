@@ -51,6 +51,37 @@ run
 %
 commit
 
+run
+  "sprinkle some unmanaged classes around in the symbol dicts ... should show up as to-be-deleted classes"
+(
+Object subclass: 'RedOrphanedClass1'
+	instVarNames: #()
+	classVars: #()
+	classInstVars: #()
+	poolDictionaries: #()
+	inDictionary: Red
+	options: #()
+) category: 'Orphaned'.
+(
+Object subclass: 'YellowOrphanedClass1'
+	instVarNames: #()
+	classVars: #()
+	classInstVars: #()
+	poolDictionaries: #()
+	inDictionary: Yellow
+	options: #()
+) category: 'Orphaned'.
+(
+Object subclass: 'BlueOrphanedClass1'
+	instVarNames: #()
+	classVars: #()
+	classInstVars: #()
+	poolDictionaries: #()
+	inDictionary: Blue
+	options: #()
+) category: 'Orphaned'.
+%
+commit
   logout
 
 # bootstrap _globals load
@@ -113,9 +144,21 @@ commit
   login
 
 run
-  | projectSetDefinitionToLoad |
+  | projectSetDefinitionToLoad orphanedClasses |
   projectSetDefinitionToLoad := UserGlobals at: #'RowanSample6_core_projectSetDefinitionToLoad'.
-  Rowan projectTools load loadProjectSetDefinition: projectSetDefinitionToLoad.
+
+  orphanedClasses := IdentitySet new.
+  [ Rowan projectTools load loadProjectSetDefinition: projectSetDefinitionToLoad ]
+    on: RwDeleteClassFromSystemNotification
+    do: [:ex |
+      GsFile gciLogServer: 'Not deleting class ', ex candidateClass name printString.
+      orphanedClasses add: ex candidateClass
+      ex resume: false. "do not delete any classes during staging load"
+      ].
+  UserGlobals 
+    at: #'RowanSample6_StagingOrphanedClasses'
+    put: orphanedClasses.
+
   Rowan projectTools load _markProjectSetNotDirty: projectSetDefinitionToLoad.
   Rowan projectTools disown
     disownProjectNamed: 'Staging_RowanSample5_core'.
