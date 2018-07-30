@@ -1,0 +1,99 @@
+set -e
+. defStone.env
+export vers="3.2.15"
+
+rm -rf *.log *.out
+
+# intended to be run against an existing stone after newBuild_SystemUser_update_sett has been run
+#   will install new Rowan code, new custom Rowan tools, new _core and new _globals
+#
+startTopaz $GEMSTONE_NAME -l << EOF
+
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 exit
+
+  set user SystemUser p swordfish
+  login
+
+run
+  "update Rowan projects"
+  Rowan projectTools load
+    loadProjectNamed: 'Cypress';
+    loadProjectNamed: 'STON';
+    loadProjectNamed: 'Tonel';
+    loadProjectNamed: 'Rowan';
+    yourself
+%
+commit
+run
+  "update Custom Rowan tools"
+  Rowan projectTools load
+    loadProjectNamed: 'RowanSample6_tools'
+%
+commit
+
+  logout
+
+  set user UserCurator p swordfish
+  login
+
+run
+  "update _core project ... don't delete a class unless unless it's name is in classNamesToDelete "
+  | classNamesToDelete orphanedClasses deferredInstanceMigrator |
+  orphanedClasses := IdentitySet new.
+  classNamesToDelete := (UserGlobals at: #'RowanSample6_ClassNamesToDelete' ifAbsent: [ #() ].
+  deferredInstanceMigrator := RwGsDeferredInstanceMigrator noMigration
+  [ Rowan projectTools load
+      loadProjectNamed: 'RowanSample6_core'
+      instanceMigrator: deferredInstanceMigrator ]
+    on: RwDeleteClassFromSystemNotification, RwExecuteClassInitializeMethodsAfterLoadNotification
+    do: [:ex | 
+      (ex isKindOf: RwDeleteClassFromSystemNotification)
+        ifTrue: [
+          | candidateClass |
+          candidateClass := ex candidateClass.
+          (classNamesToDelete inludes: candidateClass name)
+            ifTrue: [
+              "delete the class" 
+              GsFile gciLogServer: 'deleting class ', candidateClass name printString.
+              ex pass ].
+          "do not delete the class"
+          GsFile gciLogServer: 'Not deleting class ', candidateClass name printString.
+          orphanedClasses add: candidateClass
+          ex resume: false ]
+        ifFalse: [ 
+          "assume RwExecuteClassInitializeMethodsAfterLoadNotification"
+          GsFile gciLogServer: 'Skipped #initalize for class ', ex candidateClass name printString.
+          ex resume: false "do not run initializers ... initialization will be done separate from load" ] ].
+  UserGlobals 
+    at: #'RowanSample6_OrphanedClasses'
+    put: orphanedClasses.
+  deferredInstanceMigrator classesToMigrate size > 0
+    ifTrue: [
+      GsFile gciLogServer:
+        deferredInstanceMigrator classesToMigrate size printString, 
+        ' classes with new class varsions '.
+      deferredInstanceMigrator classesToMigrate do: [:class |
+        GsFile gciLogServer: '  ', candidateClass name printString ] ]
+    ifFalse: [ GsFile gciLogServer: 'No classes with new class versions.' ]
+ 
+%
+commit
+
+  logout
+
+  set user GlobalsCurator p swordfish
+  login
+
+run
+  "update _globals project"
+  Rowan projectTools load
+    loadProjectNamed: 'RowanSample6_globals'
+%
+commit
+
+  logout
+
+  exit
+EOF
