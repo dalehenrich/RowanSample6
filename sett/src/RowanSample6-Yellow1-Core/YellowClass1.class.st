@@ -14,7 +14,9 @@ Class {
 }
 
 { #category : 'accessing' }
-YellowClass1 class >> initialize [ "no-op"
+YellowClass1 class >> initialize [
+	self error: 'initialize should not be executed'
+
 ]
 { #category : 'accessing' }
 YellowClass1 >> yellow1 [ ^1
