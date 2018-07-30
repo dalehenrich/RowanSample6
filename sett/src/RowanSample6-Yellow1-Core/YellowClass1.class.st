@@ -14,5 +14,8 @@ Class {
 }
 
 { #category : 'accessing' }
+YellowClass1 class >> initialize [ "no-op"
+]
+{ #category : 'accessing' }
 YellowClass1 >> yellow1 [ ^1
 ]
