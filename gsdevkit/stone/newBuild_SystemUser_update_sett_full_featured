@@ -144,12 +144,11 @@ commit
   login
 
 run
+  "update _core project ... using full-featured load: class deletion handler, class initialize handler, deferred instance migration "
   | projectSetDefinitionToLoad | 
   projectSetDefinitionToLoad := UserGlobals at: #'RowanSample6_core_projectSetDefinitionToLoad'.
-
-  "update _core project ... using full-featured load: class deletion handler, class initialize handler, deferred instance migration "
   Rowan projectTools load_sample6
-    fullFeaturedLoad: [ 
+    fullFeaturedLoad: [ :deferredInstanceMigrator | 
       Rowan projectTools load
         loadProjectSetDefinition: projectSetDefinitionToLoad
         instanceMigrator: deferredInstanceMigrator.

@@ -7,25 +7,31 @@ Class {
 { #category : 'load support' }
 RowanSample6ProjectLoadSupport >> fullFeaturedLoad: theLoadBlock [
 
-  | classNamesToDelete orphanedClasses deferredInstanceMigrator |
+  self fullFeaturedLoad: theLoadBlock classNamesToDelete: #()
+]
+
+{ #category : 'load support' }
+RowanSample6ProjectLoadSupport >> fullFeaturedLoad: theLoadBlock classNamesToDelete: classNamesToDelete [
+
+  | orphanedClasses deferredInstanceMigrator |
   orphanedClasses := IdentitySet new.
-  classNamesToDelete := (UserGlobals at: #'RowanSample6_ClassNamesToDelete' ifAbsent: [ #() ].
-  deferredInstanceMigrator := RwGsDeferredInstanceMigrator noMigration
-  theLoadBlock
+  
+  deferredInstanceMigrator := RwGsDeferredInstanceMigrator noMigration.
+  [ theLoadBlock value: deferredInstanceMigrator ]
     on: RwDeleteClassFromSystemNotification, RwExecuteClassInitializeMethodsAfterLoadNotification
     do: [:ex | 
       (ex isKindOf: RwDeleteClassFromSystemNotification)
         ifTrue: [
           | candidateClass |
           candidateClass := ex candidateClass.
-          (classNamesToDelete inludes: candidateClass name)
+          (classNamesToDelete includes: candidateClass name)
             ifTrue: [
               "delete the class" 
               GsFile gciLogServer: 'deleting class ', candidateClass name printString.
               ex pass ].
           "do not delete the class"
           GsFile gciLogServer: 'Not deleting class ', candidateClass name printString.
-          orphanedClasses add: candidateClass
+          orphanedClasses add: candidateClass.
           ex resume: false ]
         ifFalse: [ 
           "assume RwExecuteClassInitializeMethodsAfterLoadNotification"
@@ -40,7 +46,7 @@ RowanSample6ProjectLoadSupport >> fullFeaturedLoad: theLoadBlock [
         deferredInstanceMigrator classesToMigrate size printString, 
         ' classes with new class varsions '.
       deferredInstanceMigrator classesToMigrate do: [:class |
-        GsFile gciLogServer: '  ', candidateClass name printString ] ]
+        GsFile gciLogServer: '  ', class name printString ] ]
     ifFalse: [ GsFile gciLogServer: 'No classes with new class versions.' ].
 
 ]
