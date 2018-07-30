@@ -40,14 +40,17 @@ commit
 
 run
   "update _core project ... using full-featured load: class deletion handler, class initialize handler, deferred instance migration "
-  | classNamesToDelete |
+  | classNamesToDelete orphanedClasses |
   classNamesToDelete := UserGlobals at: #'RowanSample6_ClassNamesToDelete' ifAbsent: [ #() ].
-  Rowan projectTools load_sample6
-    classNamesToDelete: classNamesToDelete
+  orphanedClasses := Rowan projectTools load_sample6
     fullFeaturedLoad: [ :deferredInstanceMigrator |
       Rowan projectTools load
         loadProjectNamed: 'RowanSample6_core'
         instanceMigrator: deferredInstanceMigrator ]
+    classNamesToDelete: classNamesToDelete.
+  UserGlobals 
+    at: #'RowanSample6_OrphanedClasses'
+    put: orphanedClasses.
 %
 commit
 

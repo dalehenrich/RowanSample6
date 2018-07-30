@@ -145,14 +145,17 @@ commit
 
 run
   "update _core project ... using full-featured load: class deletion handler, class initialize handler, deferred instance migration "
-  | projectSetDefinitionToLoad | 
+  | projectSetDefinitionToLoad orphanedClasses| 
   projectSetDefinitionToLoad := UserGlobals at: #'RowanSample6_core_projectSetDefinitionToLoad'.
   Rowan projectTools load_sample6
     fullFeaturedLoad: [ :deferredInstanceMigrator | 
-      Rowan projectTools load
+      orphanedClasses := Rowan projectTools load
         loadProjectSetDefinition: projectSetDefinitionToLoad
         instanceMigrator: deferredInstanceMigrator.
       Rowan projectTools load _markProjectSetNotDirty: projectSetDefinitionToLoad ].
+  UserGlobals 
+    at: #'RowanSample6_StagingOrphanedClasses'
+    put: orphanedClasses.
   Rowan projectTools disown
     disownProjectNamed: 'Staging_RowanSample5_core'.
 %

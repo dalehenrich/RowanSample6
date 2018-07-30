@@ -7,7 +7,7 @@ Class {
 { #category : 'load support' }
 RowanSample6ProjectLoadSupport >> fullFeaturedLoad: theLoadBlock [
 
-  self fullFeaturedLoad: theLoadBlock classNamesToDelete: #()
+  ^ self fullFeaturedLoad: theLoadBlock classNamesToDelete: #()
 ]
 
 { #category : 'load support' }
@@ -37,9 +37,6 @@ RowanSample6ProjectLoadSupport >> fullFeaturedLoad: theLoadBlock classNamesToDel
           "assume RwExecuteClassInitializeMethodsAfterLoadNotification"
           GsFile gciLogServer: 'Skipped #initalize for class ', ex candidateClass name printString.
           ex resume: false "do not run initializers ... initialization will be done separate from load" ] ].
-  UserGlobals 
-    at: #'RowanSample6_OrphanedClasses'
-    put: orphanedClasses.
   deferredInstanceMigrator classesToMigrate size > 0
     ifTrue: [
       GsFile gciLogServer:
@@ -48,5 +45,6 @@ RowanSample6ProjectLoadSupport >> fullFeaturedLoad: theLoadBlock classNamesToDel
       deferredInstanceMigrator classesToMigrate do: [:class |
         GsFile gciLogServer: '  ', class name printString ] ]
     ifFalse: [ GsFile gciLogServer: 'No classes with new class versions.' ].
+  ^ orphanedClasses
 
 ]
