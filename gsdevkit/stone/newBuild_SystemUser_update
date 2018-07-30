@@ -40,7 +40,7 @@ commit
 
 run
   "update _core project"
-  Rowan projectTools load 
+  Rowan projectTools load
     loadProjectNamed: 'RowanSample6_core'
 %
 commit
