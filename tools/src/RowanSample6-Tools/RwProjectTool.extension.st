@@ -20,3 +20,10 @@ RwProjectTool class >> create_sample6 [
 	^ RowanSample6ProjectCreationSupport new
 
 ]
+
+{ #category : '*rowansample6-tools' }
+RwProjectTool class >> load_sample6 [
+
+	^ RowanSample6ProjectLoadSupport new
+
+]

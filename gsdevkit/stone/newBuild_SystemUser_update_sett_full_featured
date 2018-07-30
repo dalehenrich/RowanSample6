@@ -144,22 +144,16 @@ commit
   login
 
 run
-  | projectSetDefinitionToLoad orphanedClasses |
+  | projectSetDefinitionToLoad | 
   projectSetDefinitionToLoad := UserGlobals at: #'RowanSample6_core_projectSetDefinitionToLoad'.
 
-  orphanedClasses := IdentitySet new.
-  [ Rowan projectTools load loadProjectSetDefinition: projectSetDefinitionToLoad ]
-    on: RwDeleteClassFromSystemNotification
-    do: [:ex |
-      GsFile gciLogServer: 'Not deleting class ', ex candidateClass name printString.
-      orphanedClasses add: ex candidateClass
-      ex resume: false. "do not delete any classes during staging load"
-      ].
-  UserGlobals 
-    at: #'RowanSample6_StagingOrphanedClasses'
-    put: orphanedClasses.
-
-  Rowan projectTools load _markProjectSetNotDirty: projectSetDefinitionToLoad.
+  "update _core project ... using full-featured load: class deletion handler, class initialize handler, deferred instance migration "
+  Rowan projectTools load_sample6
+    fullFeaturedLoad: [ 
+      Rowan projectTools load
+        loadProjectSetDefinition: projectSetDefinitionToLoad
+        instanceMigrator: deferredInstanceMigrator.
+      Rowan projectTools load _markProjectSetNotDirty: projectSetDefinitionToLoad ].
   Rowan projectTools disown
     disownProjectNamed: 'Staging_RowanSample5_core'.
 %
