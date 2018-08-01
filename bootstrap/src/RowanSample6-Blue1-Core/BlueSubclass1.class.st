@@ -2,8 +2,8 @@ Class {
 	#name : 'BlueSubclass1',
 	#superclass : 'BlueClass1',
 	#instVars : [
-		'ivar2',
-		'ivar3'
+		'ivar3',
+		'ivar2'
 	],
 	#gs_constraints : [
 		[
