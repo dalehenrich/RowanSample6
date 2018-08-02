@@ -151,7 +151,7 @@ RowanSample6ProjectBootstrapSupport >> createBootstrapUsersAndGroups [
 		userProfile := AllUsers userWithId: userId.
 		GsObjectSecurityPolicy 
 			setCurrent: userProfile defaultObjectSecurityPolicy 
-			while: [ (userProfile objectNamed: 'UserGlobals') at: #rowanCompile put: true].
+			while: [ (userProfile objectNamed: 'UserGlobals') at: #rowanCompile put: true ].
 		userId = 'UserCurator'
 			ifTrue: [ symDicts := self _createSymbolDictionariesFor: userProfile ] ].
 
@@ -160,9 +160,13 @@ RowanSample6ProjectBootstrapSupport >> createBootstrapUsersAndGroups [
 	do: [:userId |
 		| userProfile symbolList |
 		userProfile := AllUsers userWithId: userId.
-		symbolList := userProfile symbolList.
-		symDicts do: [:newDict |
-			userProfile insertDictionary: newDict at: symbolList size ] ].
+		GsObjectSecurityPolicy 
+			setCurrent: userProfile defaultObjectSecurityPolicy 
+			while: [
+				symbolList := userProfile symbolList.
+				symDicts do: [:newDict |
+					userProfile insertDictionary: newDict at: symbolList size ].
+				Rowan projectTools browser addRowanSymbolDictionariesToPersistentSymbolListFor: userProfile ] ].
 
 ]
 
