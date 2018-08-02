@@ -7,6 +7,10 @@ Class {
 	],
 	#gs_constraints : [
 		[
+			'ivar5',
+			'Integer'
+		],
+		[
 			'ivar3',
 			'Association'
 		],
